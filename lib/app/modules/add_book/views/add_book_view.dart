@@ -17,8 +17,7 @@ class AddBookView extends GetView<AddBookController> {
       body: Center(
           child: Form(key: controller.formKey, child: Column(
             children: [
-              TextFormFiel
-              d(
+              TextFormField(
                 controller: controller.judulController,
                 decoration: InputDecoration(hintText: "Judul Buku"),
                 validator: (value) {
