@@ -4,9 +4,9 @@
 
 class ResponseLogin {
   ResponseLogin({
-      this.status, 
-      this.message, 
-      this.data,});
+    this.status,
+    this.message,
+    this.data,});
 
   ResponseLogin.fromJson(dynamic json) {
     status = json['status'];
@@ -40,14 +40,14 @@ class ResponseLogin {
 
 class DataLogin {
   DataLogin({
-      this.id, 
-      this.username, 
-      this.nama, 
-      this.telp, 
-      this.alamat, 
-      this.role, 
-      this.createdAt, 
-      this.updatedAt,});
+    this.id,
+    this.username,
+    this.nama,
+    this.telp,
+    this.alamat,
+    this.role,
+    this.createdAt,
+    this.updatedAt,});
 
   DataLogin.fromJson(dynamic json) {
     id = json['id'];

@@ -10,6 +10,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/peminjaman/bindings/peminjaman_binding.dart';
 import '../modules/peminjaman/views/peminjaman_view.dart';
+import '../modules/register/bindings/register_binding.dart';
+import '../modules/register/views/register_view.dart';
 
 part 'app_routes.dart';
 
@@ -30,13 +32,18 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
+      name: _Paths.REGISTER,
+      page: () => const RegisterView(),
+      binding: RegisterBinding(),
+    ),
+    GetPage(
       name: _Paths.BOOK,
       page: () => const BookView(),
       binding: BookBinding(),
     ),
     GetPage(
       name: _Paths.ADD_BOOK,
-      page: () => const AddBookView(),
+      page: () => const AddPeminjamanView(),
       binding: AddBookBinding(),
     ),
     GetPage(

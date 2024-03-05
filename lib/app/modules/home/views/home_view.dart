@@ -10,19 +10,80 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Column(
+        appBar: AppBar(
+          title: const Text('HomeView'),
+          centerTitle: true,
+        ),
+        body: Column(
           children: [
-            ElevatedButton(onPressed: ()=>Get.toNamed(Routes.BOOK), child: Text("Buku")),
-            ElevatedButton(onPressed: ()=>Get.toNamed(Routes.PEMINJAMAN), child: Text("Peminjaman"))
+            Container(
+              width: double.infinity,
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xd4d4d4).withOpacity(1),
+                          offset: Offset(3, 3),
+                          blurRadius: 2,
+                          spreadRadius: 0,
+                        )
+                      ]),
+                  height: 100,
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: (){Get.toNamed(Routes.BOOK);}, child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.book, size: 50),
+                      Text("Buku", textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))
+                    ],
+                  ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xd4d4d4).withOpacity(1),
+                          offset: Offset(3, 3),
+                          blurRadius: 2,
+                          spreadRadius: 0,
+                        )
+                      ]),
+                  height: 100,
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: (){Get.toNamed(Routes.PEMINJAMAN);}, child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.person, size: 50),
+                      Text("Pinjam", textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15))
+                    ],
+                  ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20),
+            ),
 
           ],
         )
-      ),
     );
   }
 }

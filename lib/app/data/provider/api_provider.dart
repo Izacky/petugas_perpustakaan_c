@@ -20,3 +20,4 @@ class ApiProvider {
     return _dio;
   }
 }
+
