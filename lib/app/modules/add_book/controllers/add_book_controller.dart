@@ -1,21 +1,22 @@
-import 'package:get/get.dart';
-
+import 'package:art_sweetalert/art_sweetalert.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:petugas_perpustakaan_c/app/data/constant/endpoint.dart';
-import 'package:petugas_perpustakaan_c/app/data/provider/api_provider.dart';
+import 'package:get/get.dart';
 import 'package:petugas_perpustakaan_c/app/data/provider/storage_provider.dart';
-import 'package:petugas_perpustakaan_c/app/routes/app_pages.dart';
-import 'package:dio/dio.dart' as dio;
 
-class AddBookController extends GetxController {
+import '../../../data/constant/endpoint.dart';
+import '../../../data/provider/api_provider.dart';
+import '../../../data/provider/storage_provider.dart';
+
+class AddPeminjamanController extends GetxController {
+  final loadingaddpinjam = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController judulController = TextEditingController();
-  final TextEditingController penulisController = TextEditingController();
-  final TextEditingController penerbitController = TextEditingController();
-  final TextEditingController tahunTerbitController = TextEditingController();
+  final TextEditingController tanggalPinjamController = TextEditingController();
+  final TextEditingController tanggalKembaliController = TextEditingController();
+  // final BukuController bukuController = Get.find();
 
-  final loading = false.obs;
+  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -30,40 +31,63 @@ class AddBookController extends GetxController {
   void onClose() {
     super.onClose();
   }
-  add() async {
-    loading(true);
+
+  void increment() => count.value++;
+
+  postPinjamBuku() async {
+
+    loadingaddpinjam(true);
+
     try {
+
       FocusScope.of(Get.context!).unfocus();
       formKey.currentState?.save();
       if (formKey.currentState!.validate()) {
-        final response = await ApiProvider.instance().post(Endpoint.book,
+        final response = await ApiProvider.instance().post(Endpoint.pinjam,
             data: {
-                  "judul": judulController.text.toString(),
-                  "penulis": penulisController.text.toString(),
-                  "penerbit": penerbitController.text.toString(),
-                  "tahun_terbit": int.parse(tahunTerbitController.text.toString()),
-                });
+              "user_id": StorageProvider.read(StorageKey.idUser),
+              "book_id": Get.parameters['id'],
+              "tanggal_pinjam": tanggalPinjamController.text.toString(),
+              "tanggal_kembali": tanggalKembaliController.text.toString()
+            });
+
         if (response.statusCode == 201) {
-          await StorageProvider.write(StorageKey.status, "logged");
           Get.back();
+          ArtSweetAlert.show(
+              context: Get.context!,
+              artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.success,
+                title: "Ruang Pustaka",
+                text: "Pinjam Buku dengan Judul " + Get.parameters['judul'].toString() + " Berhasil",
+              )
+          );
+
         } else {
-          Get.snackbar(
-              "Sorry", "Login Gagal !", backgroundColor: Colors.orange);
+          ArtSweetAlert.show(
+              context: Get.context!,
+              artDialogArgs: ArtDialogArgs(
+                type: ArtSweetAlertType.danger,
+                title: "Ruang Pustaka",
+                text: "Pinjam Buku Gagal",
+              )
+          );
         }
       }
-      loading(false);
-    } on dio.DioException catch (e) {
-      loading(false);
+      loadingaddpinjam(false);
+
+    } on DioException catch (e) {
+      loadingaddpinjam(false);
       if (e.response != null) {
         if (e.response?.data != null) {
           Get.snackbar("Sorry", "${e.response?.data['message']}",
-              backgroundColor: Colors.orange);
+              backgroundColor: Colors.red);
         }
       } else {
         Get.snackbar("Sorry", e.message ?? "", backgroundColor: Colors.red);
       }
+
     } catch (e) {
-      loading(false);
+      loadingaddpinjam(false);
       Get.snackbar("Error", e.toString(), backgroundColor: Colors.red);
     }
   }
