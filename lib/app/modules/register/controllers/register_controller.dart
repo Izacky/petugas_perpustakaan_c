@@ -9,8 +9,8 @@ import '../../../routes/app_pages.dart';
 
 class RegisterController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController namaController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController telpController = TextEditingController();
   final TextEditingController alamatController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -39,11 +39,11 @@ class RegisterController extends GetxController {
       if (formKey.currentState!.validate()) {
         final response =
         await ApiProvider.instance().post(Endpoint.register, data: {
-          "username": usernameController.text.toString(),
           "nama": namaController.text.toString(),
-          "password": passwordController.text.toString(),
-          "alamat": alamatController.text.toString(),
+          "username": usernameController.text.toString(),
           "telp": int.parse(telpController.text.toString()),
+          "alamat": alamatController.text.toString(),
+          "password": passwordController.text.toString(),
         });
         if (response.statusCode == 201) {
           Get.offAllNamed(Routes.LOGIN);
